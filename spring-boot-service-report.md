@@ -6,7 +6,6 @@
  load dynatrace mcp
 
 ```
-
 # REST Application Performance Report
 
 **Generated:** September 19, 2025  
@@ -19,7 +18,7 @@
 
 ## 📊 Executive Summary
 
-The REST application service has been analyzed for performance metrics over the past 24 hours. **Critical performance issues** have been identified with three primary endpoints showing extremely slow [...]
+The REST application service has been analyzed for performance metrics over the past 24 hours. **Critical performance issues** have been identified with three primary endpoints showing extremely slow response times (3-15 seconds), while other endpoints perform well with sub-10ms response times.
 
 ### Key Findings:
 - ✅ **No application errors or exceptions detected**
@@ -93,3 +92,112 @@ The REST application service has been analyzed for performance metrics over the 
 ## 🔍 Detailed Performance Metrics
 
 ### Response Time Distribution
+
+```
+Endpoint Performance Breakdown:
+┌─────────────────────────┬──────────────┬──────────────┬──────────────┐
+│ Endpoint                │ Min (ms)     │ Avg (ms)     │ Max (ms)     │
+├─────────────────────────┼──────────────┼──────────────┼──────────────┤
+│ /application            │ 829,039      │ 4,577,624    │ 15,408,064   │
+│ /greeting               │ 2,797,129    │ 4,040,336    │ 5,202,677    │
+│ /applicationx           │ 1,990,903    │ 3,385,735    │ 4,494,565    │
+│ /**                     │ 2,556        │ 8,270        │ 41,109       │
+│ /api/basic/null-error   │ 3,939        │ 7,835        │ 16,530       │
+│ /machine                │ 6,556        │ 7,688        │ 8,722        │
+│ /api/basic/bad-path/{id}│ 4,417        │ 6,252        │ 9,609        │
+│ /api/basic/divide-by-zero│ 4,307        │ 5,039        │ 6,386        │
+│ /api/basic/unhandled    │ 4,322        │ 4,907        │ 5,508        │
+│ /welcome                │ 3,629        │ 4,620        │ 7,501        │
+│ /check_message          │ 1,875        │ 4,426        │ 9,016        │
+└─────────────────────────┴──────────────┴──────────────┴──────────────┘
+```
+
+---
+
+## 🎯 Recommendations
+
+### 🚨 Immediate Actions Required
+
+1. **Critical Performance Investigation**
+   - **Priority 1:** `/application` endpoint (15.4s max response time)
+   - **Priority 2:** `/greeting` endpoint (5.2s max response time)  
+   - **Priority 3:** `/applicationx` endpoint (4.5s max response time)
+
+2. **Root Cause Analysis**
+   - Check for database query performance
+   - Investigate external API calls
+   - Review blocking I/O operations
+   - Analyze thread pool configuration
+
+### 💡 Optimization Strategies
+
+1. **Immediate Optimizations**
+   - Implement response caching for slow endpoints
+   - Add database query optimization
+   - Consider asynchronous processing
+   - Add connection pooling configuration
+
+2. **Monitoring Enhancements**
+   - Set up alerting for response times > 1 second
+   - Implement APM profiling for slow transactions
+   - Add custom metrics for business logic timing
+
+3. **Performance Testing**
+   - Conduct load testing on slow endpoints
+   - Profile memory usage during peak operations
+   - Test with realistic data volumes
+
+### ✅ Positive Observations
+
+1. **Excellent Error Handling**
+   - No unhandled exceptions detected
+   - Test endpoints functioning correctly
+   - Proper HTTP status code implementation
+
+2. **Good Performance Baseline**
+   - Fast endpoints show consistent sub-10ms performance
+   - Error handling endpoints are efficient
+   - Low resource utilization on well-performing routes
+
+---
+
+## 📊 Traffic Analysis
+
+### Request Volume (24-hour period)
+
+- **Total Requests:** ~60
+- **Requests per Endpoint:** 4 average
+- **Peak Traffic:** Low volume testing environment
+- **Error Requests:** 19 (test endpoints - expected)
+- **Successful Requests:** 26
+
+### Traffic Distribution
+```
+Endpoint Traffic Distribution:
+- Primary endpoints: /application, /greeting, /applicationx (12 requests)
+- Utility endpoints: /welcome, /machine, /check_message (12 requests)  
+- Test/Error endpoints: /api/basic/* (16 requests)
+- Static routes: /** (7 requests)
+```
+
+---
+
+## 🔗 Resources
+
+- **Dynatrace Service Dashboard:** [View in Dynatrace](https://uim8926h.sprint.apps.dynatracelabs.com/ui/apps/dynatrace.services/explorer?detailsId=SERVICE-D867ED3C821BD14F&sidebarOpen=false)
+- **Performance Monitoring:** Real-time metrics available in Dynatrace console
+- **Alert Configuration:** Consider setting up alerts for response times > 1000ms
+
+---
+
+## 📝 Report Metadata
+
+- **Generated by:** Dynatrace MCP Server Analysis
+- **Report Version:** 1.0
+- **Data Source:** Dynatrace GRAIL Platform
+- **Query Period:** September 18-19, 2025 (24 hours)
+- **Environment:** Dynatrace Labs (uim8926h.sprint.apps.dynatracelabs.com)
+
+---
+
+*This report was automatically generated using Dynatrace Query Language (DQL) and MCP server integration.*
