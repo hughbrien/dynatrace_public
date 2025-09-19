@@ -1,3 +1,12 @@
+# Dynatrace MCP Server with Visual Studio Code 
+- Installed MCP Server into Visual Studio Cod4
+- Copy the rules files into the .github folder
+
+```
+ load dynatrace mcp
+
+```
+
 # REST Application Performance Report
 
 **Generated:** September 19, 2025  
